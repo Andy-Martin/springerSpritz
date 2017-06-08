@@ -10,18 +10,30 @@ http = Net::HTTP.new(uri.host, uri.port)
 request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 read = true
-
+# Check the existance of the document
 if response.code.to_i == 200 
 	xml_doc  = Nokogiri::XML(response.body)
 	toread = xml_doc.xpath("//Abstract/*/text()")
 	File.open("abstract.txt", 'w') { |file| file.write(toread.to_s) }
-	puts "Got the article!"
-	articleTitle = xml_doc.xpath("//ArticleInfo/ArticleTitle/text()")	
+	# even though the document might exist, it might not have an Abstract
+		if File.zero?("abstract.txt")
+			puts "No abstract available for #{doi}. If your DOI is for a book, try a specific chapter instead."
+			File.delete("abstract.txt")
+			exit!
+		else
+			puts "Got the abstract!"
+		end
+	articleTitle = xml_doc.xpath("//ArticleInfo/ArticleTitle/text()")
+		# what if it's a Chapter? Path to the title will be incorrect
+		if articleTitle.to_s == ""
+		then articleTitle = xml_doc.xpath("//ChapterInfo/ChapterTitle/text()")
+	end
 	puts articleTitle.to_s.bold.yellow_on_black
-	print "Enter the words per minute you want to read at. 250 is fairly slow, 500 average etc: "
+	puts "Enter the words per minute you want to read at. 250 is fairly slow, 500 average etc: "
 	wpm = gets.chomp
 		while read == true
 			system("cat abstract.txt | ./speedread -w #{wpm.to_i}")
+			puts ""
 			puts "Read again? y/n: "
 			reread = gets.chomp
 				if reread == "n"
@@ -53,6 +65,7 @@ if response.code.to_i == 200
 					reread = gets.chomp
 				end
 		end
+	File.delete("abstract.txt")
 else		
 	puts "Cannot find DOI"
 end
