@@ -70,6 +70,7 @@ my $wordcounter = 0;
 my $lettercounter = 0;
 my $resumecounter = 0;
 my $t0 = [gettimeofday];
+
 sub print_stats {
 	my $elapsed = tv_interval($t0, [gettimeofday]);
 	my $truewpm = $wordcounter / $elapsed * 60;
@@ -217,7 +218,7 @@ sub main {
 		}
 	}
 
-	print_stats();
+#	print_stats();
 	sleep(1);
 }
 
