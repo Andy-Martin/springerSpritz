@@ -11,6 +11,45 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 
 
+def rereadCheck(reread)
+	if reread == "n"
+		read = false
+		File.delete("abstract.txt")
+			exit!
+	elsif reread == "no"
+		read = false
+		File.delete("abstract.txt")
+			exit!
+	elsif reread == "N"
+		read = false
+		File.delete("abstract.txt")
+			exit!
+	elsif reread == "NO"
+		read = false
+		File.delete("abstract.txt")
+			exit!
+	elsif reread == "No"
+		read = false
+		File.delete("abstract.txt")
+			exit!
+	elsif reread == "y"
+		read = true
+	elsif reread == "Y"
+		read = true
+	elsif reread == "yes"
+		read = true
+	elsif reread == "YES"
+		read = true
+	elsif reread == "Yes"
+		read = true
+	else
+		puts "Sorry I didn't understand that."
+		print "Read again? y/n: "
+		reread = gets.chomp
+		rereadCheck(reread)
+	end
+end
+
 def reading(wpm = 0)
 	read = true
 	while read == true
@@ -18,35 +57,8 @@ def reading(wpm = 0)
 				puts ""
 				print "Read again? y/n: "
 				reread = gets.chomp
-					if reread == "n"
-						read = false
-						break
-					elsif reread == "no"
-						read = false
-						break
-					elsif reread == "N"
-						read = false
-						break
-					elsif reread == "NO"
-						read = false
-						break
-					elsif reread == "No"
-						read = false
-						break
-					elsif reread == "y"
-						read = true
-					elsif reread == "yes"
-						read = true
-					elsif reread == "YES"
-						read = true
-					elsif reread == "Yes"
-						read = true
-					else
-						#TODO this re-reads regardless of the answer
-						puts "Sorry I didn't understand that."
-						print "Read again? y/n: "
-						reread = gets.chomp
-					end
+				rereadCheck(reread)
+				
 	end
 end
 
