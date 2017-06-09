@@ -2,7 +2,15 @@ require 'net/http'
 require 'Nokogiri'
 require 'colored'
 
-print "Enter the doi here: "
+puts "Welcome to the SpringerSpritz Speed Reader!".bold
+sleep 1
+puts "This only works in the Springer network as it uses the content-api :-("
+sleep 1
+puts "... but you can speedread any abstract found on SpringerLink, BMC or Nature!"
+puts "All you need is the DOI."
+sleep 1
+puts ""
+print "Enter the doi: "
 doi = gets.chomp
 
 uri = URI.parse("http://content-api.live.springer.com/document/#{doi}")
@@ -58,7 +66,6 @@ def reading(wpm = 0)
 				print "Read again? y/n: "
 				reread = gets.chomp
 				rereadCheck(reread)
-				
 	end
 end
 
@@ -75,7 +82,8 @@ if response.code.to_i == 200
 			File.delete("abstract.txt")
 			exit!
 		else
-			puts "Got the abstract!"
+			puts ""
+			puts "Got the abstract!".blue
 		end
 
 	articleTitle = xml_doc.xpath("//ArticleInfo/ArticleTitle/text()")
@@ -83,10 +91,13 @@ if response.code.to_i == 200
 		if articleTitle.to_s == ""
 		then articleTitle = xml_doc.xpath("//ChapterInfo/ChapterTitle/text()")
 		end
-
+	puts ""
 	puts articleTitle.to_s.bold.yellow_on_black
+	puts ""
 	puts "Enter the words per minute you want to read at. 250 is fairly slow, 500 average etc: "
 	wpm = gets.chomp
+	puts "You can adjust the speed with '[' and ']' and pause with space. Here we go...".blue
+	sleep 2
 		while wpm.to_i == 0
 			puts "Please enter an integer greater than zero: "
 			wpm = gets.chomp
