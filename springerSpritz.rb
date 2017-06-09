@@ -16,7 +16,7 @@ def reading(wpm = 0)
 	while read == true
 				system("cat abstract.txt | ./speedread -w #{wpm.to_i}")
 				puts ""
-				puts "Read again? y/n: "
+				print "Read again? y/n: "
 				reread = gets.chomp
 					if reread == "n"
 						read = false
@@ -44,7 +44,7 @@ def reading(wpm = 0)
 					else
 						#TODO this re-reads regardless of the answer
 						puts "Sorry I didn't understand that."
-						puts "Read again? y/n: "
+						print "Read again? y/n: "
 						reread = gets.chomp
 					end
 	end
