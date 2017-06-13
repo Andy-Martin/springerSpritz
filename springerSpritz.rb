@@ -6,7 +6,7 @@ puts "Welcome to the SpringerSpritz Speed Reader!".bold
 sleep 1
 puts "This only works in the Springer network as it uses the content-api :-("
 sleep 1
-puts "... but you can speedread any abstract found on SpringerLink, BMC or Nature!"
+puts "... but you can speedread any abstract found on SpringerLink, BMC or Palgrave!"
 puts "All you need is the DOI."
 sleep 1
 puts ""
